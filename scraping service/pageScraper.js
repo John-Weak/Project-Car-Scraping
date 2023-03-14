@@ -23,9 +23,16 @@ const teamBhp = {
 			links = links.map(el =>el.textContent.replace(/\D/g,'')) 
 			return links;
 		});
+		let postedOn = await page.$$eval('.sr_info_caption', links => {
+			links = links.filter(val => val.textContent === 'Posted on:')
+			links = links.map(doc => doc.parentElement.innerText.replace('Posted on: ','')) 
+			return links;
+		});
 		urls.map((val, index) => {
 			val.title = titles[index];
 			val.price = prices[index];
+			val.postedOn = postedOn[index];
+			val.site = 'team-bhp';
 		})
 		await page.close();
 		console.log(urls);
@@ -57,9 +64,14 @@ const driversHub = {
 		const prices = await page.$$eval('.hp-listing__attribute.hp-listing__attribute--price', links => {
 			return links.map(link => link.textContent.replace(/\D/g,''))
 		});
+		const postedOn=await page.$$eval('.hp-listing__created-date.hp-listing__date.hp-meta', links => {
+			return links.map(time => time.dateTime)
+		});
 
 		urls.map(((val, index) => {
-			val.price=prices[index]
+			val.price = prices[index]
+			val.postedOn = postedOn[index];
+			val.site = 'drivershub';
 		}))
 		await page.close();
 		console.log(urls);
