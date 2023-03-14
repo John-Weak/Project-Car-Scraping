@@ -65,7 +65,7 @@ const driversHub = {
 			return links.map(link => link.textContent.replace(/\D/g,''))
 		});
 		const postedOn=await page.$$eval('.hp-listing__created-date.hp-listing__date.hp-meta', links => {
-			return links.map(time => time.dateTime)
+			return links.map(time => time.dateTime.split(' ')[0])
 		});
 
 		urls.map(((val, index) => {
