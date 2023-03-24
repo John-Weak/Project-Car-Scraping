@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	let records = [
 		{
 			url: 'https://www.thedrivershub.com/tdhclassifieds/listing/mercedes-c220d/',
@@ -247,14 +249,19 @@
 </script>
 
 <div class="flex flex-wrap justify-center w-full max-w-screen-2xl">
-    {#each records as { price, title, imgUrl, url,postedOn }}
-	<div class="text-center p-6">
-		<img src={imgUrl} alt={title} />
-		<a target="_blank" href={url} rel="noreferrer">
-			<div class="text-2xl sm:text-3xl font-light pt-2 sm:pt-4 pb-1 sm:pb-2">{title}</div>
-            <div class="text-sm sm:text-base italic font-light text-gray-400">{postedOn}</div>
-			<div class="text-xl sm:text-2xl font-normal text-gray-200">{formatPrice(price)}</div>
-		</a>
-	</div>
-{/each}
+	{#each records as { price, title, imgUrl, url, postedOn }}
+		<div class="text-center py-2 sm:py-6 sm:px-8">
+			<img
+				src={imgUrl}
+				alt={title}
+				onerror="this.onerror=null;this.src='default.webp';"
+				class="h-56 sm:h-72 object-cover transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg filter hover:hue-rotate-90 mx-auto"
+			/>
+			<a target="_blank" href={url} rel="noreferrer">
+				<div class="text-2xl sm:text-3xl font-light pt-2 sm:pt-4 pb-1 sm:pb-2">{title}</div>
+				<div class="text-sm sm:text-base italic font-light text-gray-400">{postedOn}</div>
+				<div class="text-xl sm:text-2xl font-normal text-gray-200">{formatPrice(price)}</div>
+			</a>
+		</div>
+	{/each}
 </div>
